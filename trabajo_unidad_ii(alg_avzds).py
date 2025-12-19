@@ -299,7 +299,7 @@ def bidireccional(nodes, inicio, fin, dirigido=False):
                         mejor_distancia = dist_f[v_idx] + dist_b[v_idx]; nodo_encuentro = v_idx
 
     if nodo_encuentro is None: return None, float('inf'), nodos_visitados
-    # Reconstrucción correcta
+    # Reconstrucción
     camino = []
     curr = nodo_encuentro
     while curr is not None: camino.append(curr); curr = padre_f[curr]
@@ -326,13 +326,11 @@ def a_star(nodes, inicio, fin):
     f = {node.index: float('inf') for node in nodes}   # Costo total estimado (g + h)
     padre = {node.index: None for node in nodes}
 
-    # MÉTRICA: Contador de nodos visitados
     nodos_visitados = 0
 
     g[inicio] = 0
     f[inicio] = heuristica_euclidiana(inicio, fin, node_dict)
 
-    # Nota: El uso de heapq es más eficiente que cola.sort() cada vez
     import heapq
     cola = [(f[inicio], inicio)]
     visitados_completos = set()
@@ -343,7 +341,7 @@ def a_star(nodes, inicio, fin):
         if u in visitados_completos:
             continue
 
-        # Un nodo se considera "visitado/expandido" cuando sale de la cola [cite: 34, 75]
+        # Un nodo se considera "visitado/expandido" cuando sale de la cola 
         visitados_completos.add(u)
         nodos_visitados += 1
 
@@ -436,8 +434,8 @@ def duan_2025_sssp(nodes, inicio, fin):
     dist[inicio] = 0
     parent = {node.index: None for node in nodes}
 
-    # Parámetros de escala del paper: t ≈ log^(2/3) n [cite: 96]
-    # Definimos los buckets basados en la escala de los pesos [cite: 198]
+    # Parámetros de escala del paper: t ≈ log^(2/3) 
+    # Definimos los buckets basados en la escala de los pesos 
     num_buckets = int(math.log2(n + 1)) + 5
     buckets = [set() for _ in range(num_buckets)]
     buckets[0].add(inicio)
@@ -445,7 +443,7 @@ def duan_2025_sssp(nodes, inicio, fin):
     nodos_visitados = 0
 
     # El algoritmo debe iterar mientras existan actualizaciones pendientes
-    # para garantizar que se encuentre la distancia mínima real. [cite: 207, 284]
+    # para garantizar que se encuentre la distancia mínima real. 
     hubo_cambio = True
     while hubo_cambio:
         hubo_cambio = False
@@ -459,13 +457,13 @@ def duan_2025_sssp(nodes, inicio, fin):
                     v_idx = vecino.index
                     nueva_dist = dist[u_idx] + peso
 
-                    # Si encontramos un camino más corto hacia v [cite: 73, 197]
+                    # Si encontramos un camino más corto hacia v
                     if nueva_dist < dist[v_idx]:
                         dist[v_idx] = nueva_dist
                         parent[v_idx] = u_idx
 
-                        # Determinamos el bucket basado en la magnitud del peso [cite: 198]
-                        # Esto reduce la necesidad de un ordenamiento total (Heap) [cite: 37, 38]
+                        # Determinamos el bucket basado en la magnitud del peso 
+                        # Esto reduce la necesidad de un ordenamiento total (Heap) 
                         scale = min(num_buckets - 1, int(math.log2(peso + 1)))
                         buckets[scale].add(v_idx)
 
