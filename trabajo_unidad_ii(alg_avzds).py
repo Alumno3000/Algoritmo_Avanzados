@@ -15,9 +15,9 @@ Docente: Raul Huillca Huallparimachi
 
 Estudiantes:
   
-*   Berrios Thea Alex (215781)
-*   Castilla Vargas Dayana Angela (200858)
-*   Halanocca Surco Jhon Kevin (211818)
+*   Berrios Thea Alex 
+*   Castilla Vargas Dayana Angela 
+*   Halanocca Surco Jhon Kevin 
 
 ## ***Librerias necesarias***
 """
